@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的網站 - Bootstrap 導入前</title>
+</head>
+<body>
+  <header style="background-color:#222; color:white; padding:1rem 2rem;">
+    <h1>我的網站</h1>
+    <nav>
+      <a href="#home" style="color:white; margin-right:1rem;">首頁</a>
+      <a href="#about" style="color:white; margin-right:1rem;">關於</a>
+      <a href="#services" style="color:white; margin-right:1rem;">服務</a>
+      <a href="#contact" style="color:white;">聯絡</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" style="padding:1rem 0;">
+      <h2>歡迎來到我的網站</h2>
+      <p>這是一個示範網頁，展示如何從基本 HTML 導入 Bootstrap 5。</p>
+      <button style="background-color:#28a745; color:white; border:none; padding:0.5rem 1rem; cursor:pointer;">了解更多</button>
+      <br><br>
+      <img src="C:\Users\YuLiChien\Documents\GitHub\114_tkuim_web\images1.jpeg" alt="示範圖片" style="width:100%; height:auto; display:block;">
+    </section>
+
+    <section id="about" style="padding:1rem 0;">
+      <h2>關於我們</h2>
+      <div>
+        <div style="width:48%; display:inline-block; vertical-align:top; margin-bottom:1rem;">
+          <h3>專業</h3>
+          <p>提供專業的網頁設計服務</p>
+        </div>
+        <div style="width:48%; display:inline-block; vertical-align:top; margin-bottom:1rem;">
+          <h3>創新</h3>
+          <p>採用最新的技術和設計趨勢</p>
+        </div>
+        <div style="width:48%; display:inline-block; vertical-align:top; margin-bottom:1rem;">
+          <h3>品質</h3>
+          <p>確保每個專案都達到最高標準</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" style="padding:1rem 0;">
+      <h2>我們的服務</h2>
+      <ul>
+        <li>網頁設計</li>
+        <li>響應式開發</li>
+        <li>SEO 優化</li>
+        <li>維護服務</li>
+      </ul>
+    </section>
+
+    <section id="contact" style="padding:1rem 0;">
+      <h2>聯絡我們</h2>
+      <form>
+        <label for="name">姓名：</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+        <label for="email">Email：</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+        <label for="message">訊息：</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <br><br>
+        <button type="submit" style="background-color:#28a745; color:white; border:none; padding:0.5rem 1rem; cursor:pointer;">送出</button>
+      </form>
+    </section>
+  </main>
+
+  <footer style="background-color:#222; color:white; text-align:center; padding:1rem 0;">
+    <p>&copy; 2024 我的網站. All rights reserved.</p>
+  </footer>
+</body>
+</html>
