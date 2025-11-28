@@ -1,0 +1,210 @@
+:root {
+  --blue-main: #a8d8ff;
+  --blue-light: #d9efff;
+  --dark-bg: #2f2f2f;
+  --dark-card: #3c3c3c;
+  --dark-text: #fff;
+  --light-text: #000;
+}
+
+/* 全域設定 */
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  background-color: var(--blue-light);
+  color: var(--light-text);
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  background-color: var(--blue-main);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-radius: 0 0 20px 20px;
+}
+
+main {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 20px 40px;
+}
+
+/* 表單 */
+form {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* label 排版 */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 18px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--blue-main);
+  box-shadow: 0 0 6px rgba(168, 216, 255, 0.8);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 16px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--blue-main);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.type-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.type-buttons button.active {
+  background-color: #77b2f0;
+}
+
+.add-category {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* 記錄列表 */
+#recordList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.record-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+.record-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.delete-btn {
+  background-color: #9dcde1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background-color: #e35b5b;
+}
+
+/* 統計 */
+#summary {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 2px 8px rgba(115, 145, 226);
+}
+
+canvas {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  margin-top: 30px;
+  padding: 10px;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* 深色模式 */
+.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode header {
+  background-color: #444;
+}
+
+.dark-mode form,
+.dark-mode #summary,
+.dark-mode .record-card,
+.dark-mode canvas {
+  background-color: var(--dark-card);
+  color: var(--dark-text);
+}
+
+.dark-mode button {
+  background-color: #666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+/* RWD 微調 */
+@media (max-width: 600px) {
+  .type-buttons {
+    flex-direction: column;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  #recordList .record-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
