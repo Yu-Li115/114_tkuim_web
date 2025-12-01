@@ -13,9 +13,8 @@ function saveToLocal() {
     } else {
       localStorage.setItem(input.id, input.value);
     }
-  });
+   });
 }
-
 function loadFromLocal() {
   inputs.forEach(input => {
     const val = localStorage.getItem(input.id);
@@ -53,7 +52,6 @@ function checkPasswordStrength(value) {
   strengthBar.style.backgroundColor = colors[idx];
   strengthText.textContent = value ? `密碼強度：${levels[idx]}` : '密碼強度：尚未輸入';
 }
-
 function validateInput(input) {
   const value = input.value.trim();
   let message = '';
@@ -100,7 +98,7 @@ form.parentNode.appendChild(viewBtn);
 
 async function submitSignupAPI(payload, retries = 1) {
   try {
-    const res = await fetch('http://localhost:3001/api/signup', {
+    const res = await fetch('http://localhost:3001/api/signup', { // 👈 URL 已修正
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -118,7 +116,7 @@ async function submitSignupAPI(payload, retries = 1) {
 }
 
 async function getSignupList() {
-  const res = await fetch('http://localhost:3001/api/signup');
+  const res = await fetch('http://localhost:3001/api/signup'); 
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || '取得失敗');
   return data;
@@ -127,26 +125,32 @@ async function getSignupList() {
 form.addEventListener('submit', async e => {
   e.preventDefault();
   let firstInvalid = null;
+
   inputs.forEach(input => { validateInput(input); if (!input.checkValidity() && !firstInvalid) firstInvalid = input; });
   const checked = interests.querySelectorAll('input[type="checkbox"]:checked').length;
   if (checked === 0) { document.getElementById('interest-error').textContent = '請至少選擇 1 項興趣'; if (!firstInvalid) firstInvalid = interests.querySelector('input[type="checkbox"]'); }
   const termsCheckbox = document.getElementById('terms');
   if (!termsCheckbox.checked) { document.getElementById('terms-error').textContent = '請勾選服務條款'; if (!firstInvalid) firstInvalid = termsCheckbox; } else { document.getElementById('terms-error').textContent = ''; }
   if (firstInvalid) { firstInvalid.focus(); return; }
-  const payload = Object.fromEntries(new FormData(form).entries());
-  payload.interests = Array.from(interests.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
-  payload.terms = termsCheckbox.checked;
+  const formData = new FormData(form);
+  const apiPayload = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    phone: formData.get('phone'),
+  };
+  
   try {
     submitBtn.disabled = true;
     submitBtn.textContent = '送出中...';
-    const result = await submitSignupAPI(payload, 1);
-    alert(`✅ ${result.message}`);
+    const result = await submitSignupAPI(apiPayload, 1); 
+    alert(`✅ 報名成功！資料 ID: ${result.id}`); 
+
     form.reset();
     strengthBar.style.width = '0';
     strengthText.textContent = '密碼強度：尚未輸入';
     inputs.forEach(input => localStorage.removeItem(input.id));
   } catch (error) {
-    alert(`❌ ${error.message}`);
+    alert(`❌ 報名失敗: ${error.message}`);
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = '送出';

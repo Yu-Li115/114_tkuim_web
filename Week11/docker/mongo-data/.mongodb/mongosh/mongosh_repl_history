@@ -1,0 +1,4 @@
+db.participants.find().pretty()
+use week11
+db.participants.find().pretty()
+use week11

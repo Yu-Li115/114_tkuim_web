@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { connectDB } from './db.js';
 import signupRouter from './routes/signup.js';
+import { ensureIndexes } from './repositories/participants.js'; 
 
 const app = express();
 app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
@@ -16,13 +17,15 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err);
+  if (err.code === 11000) {
+     return res.status(409).json({ error: '資料重複：該 Email 已被註冊' });
+  }
   res.status(500).json({ error: 'Server Error' });
 });
-
 const port = process.env.PORT || 3001;
-
 connectDB()
-  .then(() => {
+  .then(async () => { 
+    await ensureIndexes(); 
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });

@@ -6,7 +6,6 @@ import {
   updateParticipant,
   deleteParticipant
 } from '../repositories/participants.js';
-
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
@@ -18,14 +17,21 @@ router.post('/', async (req, res, next) => {
     const id = await createParticipant({ name, email, phone });
     res.status(201).json({ id });
   } catch (error) {
+    if (error.message.includes('Email 已經被使用')) {
+      return res.status(409).json({ error: error.message });
+    }
     next(error);
   }
 });
 
 router.get('/', async (req, res, next) => {
   try {
-    const participants = await listParticipants();
-    res.json({ items: participants, total: participants.length });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const items = await listParticipants(page, limit);
+    const total = items.length;
+
+    res.json({ items, total });
   } catch (error) {
     next(error);
   }
@@ -42,7 +48,6 @@ router.patch('/:id', async (req, res, next) => {
     next(error);
   }
 });
-
 router.delete('/:id', async (req, res, next) => {
   try {
     const result = await deleteParticipant(req.params.id);
