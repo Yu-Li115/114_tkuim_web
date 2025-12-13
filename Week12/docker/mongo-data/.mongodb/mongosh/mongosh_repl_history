@@ -1,0 +1,12 @@
+.exit
+db.logs.find().pretty()
+db.participants.find().pretty()
+db.users.find().pretty()
+use week12
+db.users.find().pretty()
+use week12
+.exit
+cd Week12
+db.users.find().pretty()
+show collections
+use week12

@@ -1,0 +1,86 @@
+### 1. 註冊 Admin 用戶 (SETUP)
+POST http://localhost:3001/auth/signup // 🎯 確保埠號是 3001 (根據您伺服器啟動的結果)
+Content-Type: application/json
+
+{
+    "email": "admin_test@test.com",
+    "password": "pass1234",
+    "role": "admin"
+}
+
+### 2. 註冊 Student 用戶 (SETUP)
+POST http://localhost:3001/auth/signup
+Content-Type: application/json
+
+{
+    "email": "student_test@test.com",
+    "password": "4321",
+    "role": "student"
+}
+
+### 3. Admin 登入並儲存 Token
+@admin_password = pass1234
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin_test@test.com",
+    "password": "{{admin_password}}"
+}
+// > {% client.global.set("admin_token", response.body.token); %} 
+// > {% client.global.set("admin_refresh", response.body.refreshToken); %}
+
+### 4. Student 登入並儲存 Token
+@student_password = 4321
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+    "email": "student_test@test.com",
+    "password": "{{student_password}}"
+}
+// > {% client.global.set("student_token", response.body.token); %}
+
+### 5. 測試未登入存取 (應回傳 401)
+// 🎯 修正路徑
+GET http://localhost:3001/api/participants 
+
+### 6. Admin 新增資料 A (測試 POST)
+// 🎯 修正路徑
+POST http://localhost:3001/api/participants
+Content-Type: application/json
+Authorization: Bearer {{admin_token}}
+
+{
+    "name": "Admin新增的資料A",
+    "phone": "0911222333",
+    "note": "這是 Admin 的資料"
+}
+// > {% client.global.set("participant_id", response.body._id); %}
+
+### 7. Student 新增資料 B
+// 🎯 修正路徑
+POST http://localhost:3001/api/participants
+Content-Type: application/json
+Authorization: Bearer {{student_token}}
+
+{
+    "name": "Student新增的資料B",
+    "phone": "0955666777",
+    "note": "這是 Student 的資料"
+}
+
+### 8. 測試 Admin 查詢 (應看到所有資料: 2筆)
+// 🎯 修正路徑
+GET http://localhost:3001/api/participants
+Authorization: Bearer {{admin_token}}
+
+### 9. 測試 Student 查詢 (應只看到自己新增的資料: 1筆)
+// 🎯 修正路徑
+GET http://localhost:3001/api/participants
+Authorization: Bearer {{student_token}}
+
+### 10. 測試 Admin 刪除資料 A (DELETE)
+// 🎯 修正路徑
+DELETE http://localhost:3001/api/participants/{{participant_id}}
+Authorization: Bearer {{admin_token}}
