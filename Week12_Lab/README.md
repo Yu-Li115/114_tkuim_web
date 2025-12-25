@@ -15,8 +15,12 @@
 ## 專案結構
 Week12_Lab/
 ├─ server/
+│  ├─ logs.js
+│  ├─ package-lock.json
 │  ├─ package.json
-│  ├─ .env.example
+│  ├─ .env
+│  ├─ vitest.config.js
+│  ├─ node_modules/
 │  ├─ src/
 │  │  ├─ app.js
 │  │  ├─ index.js
@@ -26,9 +30,11 @@ Week12_Lab/
 │  │  │  ├─ users.js
 │  │  │  └─ participants.js
 │  │  ├─ routes/
+│  │  │  ├─ participants.js
 │  │  │  ├─ auth.js
 │  │  │  └─ signup.js
 │  │  ├─ middleware/
+│  │  │  ├─ lod.js
 │  │  │  └─ auth.js
 │  │  └─ scripts/
 │  │     └─ hash-password.js
@@ -40,6 +46,8 @@ Week12_Lab/
 │  ├─ login.js
 │  └─ signup_form.js
 ├─ docker/
+│  ├─mongo-data/
+│  ├─docker-compose.yml
 │  └─ mongo-init.js
 └─ README.md
 
@@ -56,8 +64,6 @@ REFRESH_TOKEN_EXPIRES_IN=7d
 2. 安裝 server 套件：
 cd server
 npm install
-
----
 
 ## 啟動方式
 
@@ -124,8 +130,9 @@ body:
 
 4. 刪除報名資料  
 DELETE /api/signup/<id>  
-- 只能刪自己資料或 admin 可刪全部
-
+刪除報名資料 (DELETE) - 權限核心測試 DELETE /api/participants/<id>
+驗證 403： 帶學生 token 嘗試刪除 Admin 資料，預期回傳 403 Forbidden。
+驗證 204： 只能刪自己資料或 Admin 可刪全部，預期回傳 204 No Content。
 ---
 
 ## 加分項功能
@@ -135,11 +142,4 @@ DELETE /api/signup/<id>
    - 提供 email 驗證與重設密碼 API
 3. 操作日誌
    - 記錄每個使用者在什麼時間做了什麼操作（新增/刪除報名資料、登入登出等）
-
----
-
-## 注意事項
-- 確保 .env 裡有設定 JWT_SECRET
-- 密碼不可以明碼存入資料庫
-- Docker mongo-data 目錄會保留資料
-- Admin 帳號可查看所有資料，學生僅能操作自己的資料
+   - 實作路徑： server/logs.js 與 server/src/middleware/lod.js
