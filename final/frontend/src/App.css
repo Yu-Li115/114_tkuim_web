@@ -1,0 +1,21 @@
+/* 讓 App 容器在手機寬度下改為垂直排列 */
+@media screen and (max-width: 850px) {
+  .App-container {
+    flex-direction: column !important;
+  }
+  
+  .sidebar-area {
+    width: 100% !important;
+    padding: 20px !important;
+    text-align: center;
+  }
+
+  .content-area {
+    padding: 20px !important;
+  }
+
+  /* 調整星星與文字，避免在手機上過擠 */
+  .review-section form {
+    flex-direction: column;
+  }
+}
